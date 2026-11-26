@@ -25,6 +25,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh release create img-${{ github.run_id }} \
+            --repo ${{ github.repository }} \
             --title "LoopForge images run ${{ github.run_id }}" \
             --notes "loopforge 0.4.2 RepoDigest: sha256:a98a6c2c2c1c67ac98234dca07e3e1d287dace67f1108adc70266e955fecb564 (与 GitHub Release v0.4.2 官方记录一致)" \
             loopforge-0.4.2.tar.gz
