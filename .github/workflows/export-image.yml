@@ -1,0 +1,23 @@
+name: export-loopforge-image
+on:
+  workflow_dispatch:
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull and export LoopForge image
+        run: |
+          docker pull ghcr.io/tencent/loopforge:0.4.2
+          echo "LoopForge RepoDigest: $(docker image inspect --format '{{index .RepoDigests 0}}' ghcr.io/tencent/loopforge:0.4.2)"
+          docker save ghcr.io/tencent/loopforge:0.4.2 | gzip > loopforge-0.4.2.tar.gz
+
+      - name: Show sizes
+        run: ls -lh *.tar.gz
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: loopforge-images
+          path: |
+            loopforge-0.4.2.tar.gz
+          compression-level: 0
